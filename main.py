@@ -1,16 +1,11 @@
-# main.py
-
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import random
 
-# FastAPIアプリケーションのインスタンスを作成
+
 app = FastAPI()
 
-# --- Pydanticモデルの定義 ---
-# POSTリクエストで受け取るデータの型を定義します。
-# これにより、FastAPIはリクエストのボディが正しい形式か自動でチェックしてくれます。
 
 class PresentBody(BaseModel):
     """ /present エンドポイント用のリクエストボディ """
@@ -23,7 +18,7 @@ class DiagnoseBody(BaseModel):
     thing: str
 
 
-# --- GETメソッドのエンドポイント ---
+
 
 @app.get("/")
 async def root():
@@ -61,8 +56,7 @@ async def get_index_page():
             <!-- 課題1: オリジナルのWebページ表示 -->
             <section class="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h2 class="text-2xl font-semibold border-b-2 border-blue-300 pb-2 mb-4">課題1：オリジナルWebページの表示</h2>
-                <p>このページ自体が、GETメソッドでHTMLを返す課題の回答です。</p>
-                <p class="mt-2">このHTMLは自由に書き換えて、オリジナルのページを作成してみてください！</p>
+                <p>課題: 上記の例をコピーして、 https://{自分のURL}/indexにアクセスするとWebページが表示されるようにせよ。さらに、HTMLの内容を好きなように書き換えよ。</p>
             </section>
 
             <!-- 課題2: オリジナルPOSTメソッドのテスト -->
@@ -149,12 +143,11 @@ async def get_index_page():
     return HTMLResponse(content=html_content)
 
 
-# --- POSTメソッドのエンドポイント ---
+
 
 @app.post("/present")
 async def give_present(item: PresentBody):
     """ 課題の例として提示されたPOSTメソッドの修正版 """
-    # Pydanticモデル `PresentBody` を使ってリクエストボディを受け取る
     response_message = f"サーバです。メリークリスマス！{item.sender}さんから {item.present}をありがとう。お返しはキャンディーです。"
     return {"response": response_message}
 
@@ -168,7 +161,6 @@ async def diagnose_character(item: DiagnoseBody):
     name = item.name
     thing = item.thing
 
-    # ランダムで診断結果を選択
     diagnoses = [
         f"{name}さん、{thing}が好きなんですね！あなたは情熱的で、周りを明るくする太陽のような人です！",
         f"{thing}が好きな{name}さんは、探求心が旺盛な冒険家タイプ！新しいことに挑戦するのが得意ですね。",
